@@ -65,7 +65,7 @@ jobs:
         run: |
           sha256sum -b ${{ vars.COLLECTOR }}-${{ needs.Date.outputs.Date }}.tgz | tee \
             ${{ vars.COLLECTOR }}-${{ needs.Date.outputs.Date }}.tgz.sha
- 
+
       - name: List files 
         run: ls -Alht ${{ vars.COLLECTOR }}-${{ needs.Date.outputs.Date }}.tgz*
 
@@ -111,10 +111,10 @@ jobs:
           path: ${{ vars.COLLECTOR }}-${{ needs.Date.outputs.Date }}.bundle*
           if-no-files-found: error
 
-      - name: TARCHIVE Repo1 code base for ${{ vars.COLLECTOR }}
+      - name: TARchive code base for ${{ vars.COLLECTOR }}
         run: |
           tar -cvC .. \
-            -f ${{ vars.COLLECTOR }}-code-${{ needs.Date.outputs.Date }}.tgz Collector-* \
+            -f ${{ vars.COLLECTOR }}-code-${{ needs.Date.outputs.Date }}.tgz $(basename ${{ github.WORKSPACE }}) \
             | tee ${{ vars.COLLECTOR }}-code-${{ needs.Date.outputs.Date }}.tgz.txt
 
       - name: Generate TARchive Hash
@@ -155,9 +155,11 @@ jobs:
           merge-multiple: true
           path: ${{ vars.COLLECTOR }}
 
+      # Download Binaries if needed
+      # Binaries Downloaded
+
       - name: Copy README to ${{ vars.COLLECTOR }} ISO
         run: cp -v README.md ${{ vars.COLLECTOR }}/
-
 
       - name: Show Artifacts
         run: ls -Alht ${{ vars.COLLECTOR }}
