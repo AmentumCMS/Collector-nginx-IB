@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 0 * * 1" # Update weekly on Monday Midnight
+    - cron: "0 0 1 * *" # Update on First of month at midnight UTC
   workflow_dispatch:
 
 jobs:
@@ -267,7 +267,7 @@ jobs:
         run: ls -Alht ${{ vars.COLLECTOR }}-*.*
 
       - name: Send Files to Sharepoint
-        uses: amentumcms/sharepoint-file-upload-action@pappasjfed-patch-1
+        uses: amentumcms/sharepoint-file-upload-action@main
         with:
           file_path: "${{ vars.COLLECTOR }}-*.*"
           host_name: ${{ secrets.SHAREPOINT_HOST }}
