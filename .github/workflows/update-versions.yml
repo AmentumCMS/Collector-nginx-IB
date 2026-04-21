@@ -27,6 +27,8 @@ jobs:
           YAML_FILE: "${{ vars.COLLECTOR }}.yml"
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
           REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+          REDHAT_USER: ${{ secrets.REDHAT_USER }}
+          REDHAT_TOKEN: ${{ secrets.REDHAT_PASS }}
         run: |
           # 1. Iterate through all top-level registries in the YAML
           REGISTRIES=$(yq eval 'keys | .[]' "$YAML_FILE")
@@ -38,6 +40,9 @@ jobs:
             if [[ "$REGISTRY" == "registry1.dso.mil" ]]; then
               echo "🔑 Logging into Iron Bank..."
               skopeo login "$REGISTRY" -u "$REGISTRY_USER" -p "$REGISTRY_TOKEN"
+            elif [[ "$REGISTRY" == "registry.redhat.io" ]]; then
+              echo "🔑 Logging into Red Hat..."
+              skopeo login "$REGISTRY" -u "$REDHAT_USER" -p "$REDHAT_TOKEN"
             else
               echo "🔓 Skipping login for $REGISTRY (Public/GHCR)"
             fi
