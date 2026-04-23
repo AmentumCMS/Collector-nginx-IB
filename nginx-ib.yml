@@ -2,3 +2,5 @@ registry1.dso.mil:
   images-by-tag-regex:
     ironbank/opensource/nginx/nginx: ^1.30.0$
     ironbank/opensource/nginx/nginx-alpine: ^1.29.7$
+gcr.io:
+  distroless/java21: nonroot
